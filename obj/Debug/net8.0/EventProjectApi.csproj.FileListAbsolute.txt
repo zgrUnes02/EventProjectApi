@@ -138,3 +138,4 @@ C:\Users\youness zagouri\Desktop\.NET 2025\EventProjectApi\EventProjectApi\obj\D
 C:\Users\youness zagouri\Desktop\.NET 2025\EventProjectApi\EventProjectApi\obj\Debug\net8.0\EventProjectApi.pdb
 C:\Users\youness zagouri\Desktop\.NET 2025\EventProjectApi\EventProjectApi\obj\Debug\net8.0\EventProjectApi.genruntimeconfig.cache
 C:\Users\youness zagouri\Desktop\.NET 2025\EventProjectApi\EventProjectApi\obj\Debug\net8.0\ref\EventProjectApi.dll
+C:\Users\youness zagouri\Desktop\.NET 2025\EventProjectApi\EventProjectApi\obj\Debug\net8.0\EventProjectApi.sourcelink.json
