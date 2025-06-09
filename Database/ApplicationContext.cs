@@ -12,6 +12,7 @@ namespace EventProjectApi.Database
 
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<Attendee> Attendees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

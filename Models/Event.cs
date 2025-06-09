@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EventProjectApi.Models
 {
@@ -23,6 +24,7 @@ namespace EventProjectApi.Models
         public int OrganizerId { get; set; }
         public User Organizer { get; set; }
 
+        [JsonIgnore]
         public ICollection<Attendee> Attendees { get; set; } = new List<Attendee>();
     }
 }

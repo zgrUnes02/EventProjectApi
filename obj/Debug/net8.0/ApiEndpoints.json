@@ -1,8 +1,60 @@
 [
   {
     "ContainingType": "EventProjectApi.Controllers.EventController",
+    "Method": "GetAllEvents",
+    "RelativePath": "api/events",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortingDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EventProjectApi.Controllers.EventController",
+    "Method": "AddAttendeeToEvent",
+    "RelativePath": "api/events/{EventId}/attendees",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "EventId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EventProjectApi.Controllers.EventController",
     "Method": "CreateNewEvent",
-    "RelativePath": "api/Event/create",
+    "RelativePath": "api/events/create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -23,7 +75,7 @@
   {
     "ContainingType": "EventProjectApi.Controllers.UserController",
     "Method": "CreateNewUser",
-    "RelativePath": "api/User/create",
+    "RelativePath": "api/users/create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
