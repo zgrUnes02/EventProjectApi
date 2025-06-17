@@ -1,5 +1,6 @@
 ﻿using EventProjectApi.Database;
 using EventProjectApi.DTOs.UserDtos;
+using EventProjectApi.Mappers;
 using EventProjectApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -119,17 +120,12 @@ namespace EventProjectApi.Controllers
                 }
 
                 // Sorting Events By Event Date
-                query = sortingDate?.ToLower() == "asc" ? query.OrderBy(e => e.EventDate) : query.OrderByDescending(e => e.EventDate);
+                query = sortingDate?.ToLower() == "asc" 
+                    ? query.OrderBy(e => e.EventDate) 
+                    : query.OrderByDescending(e => e.EventDate);
 
                 var events = await query
-                    .Select(s => new
-                    {
-                        s.Title,
-                        s.Description,
-                        s.Location,
-                        EventDate = s.EventDate,
-                        organizer_name = s.Organizer.Name
-                    })
+                    .Select(s => s.ToGetEventDto())
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToListAsync();
