@@ -1,5 +1,6 @@
 ﻿using EventProjectApi.Database;
 using EventProjectApi.DTOs.UserDtos;
+using EventProjectApi.Helpers.Queries;
 using EventProjectApi.Mappers;
 using EventProjectApi.Models;
 using Microsoft.AspNetCore.Http;
@@ -96,17 +97,16 @@ namespace EventProjectApi.Controllers
         /// API to get all events
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> GetAllEvents(string? eventDate, string? sortingDate = "asc", int page = 1, int pageSize = 10)
+        public async Task<ActionResult> GetAllEvents([FromQuery] AllEventQuery allEventQuery)
         {
             try
             {
                 // Filter Event Date ( Past OR Future )
                 var query = _context.Events.AsNoTracking();
 
-                if ( !string.IsNullOrEmpty(eventDate) )
+                if ( !string.IsNullOrEmpty(allEventQuery.eventDate) )
                 {
-                    string lowerEventDate = eventDate.ToLower();
+                    string lowerEventDate = allEventQuery.eventDate.ToLower();
 
                     if ( lowerEventDate == "past" )
                     {
@@ -120,17 +120,17 @@ namespace EventProjectApi.Controllers
                 }
 
                 // Sorting Events By Event Date
-                query = sortingDate?.ToLower() == "asc" 
+                query = allEventQuery.sortingDate?.ToLower() == "asc" 
                     ? query.OrderBy(e => e.EventDate) 
                     : query.OrderByDescending(e => e.EventDate);
 
                 var events = await query
                     .Select(s => s.ToGetEventDto())
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
+                    .Skip((allEventQuery.page - 1) * allEventQuery.pageSize)
+                    .Take(allEventQuery.pageSize)
                     .ToListAsync();
 
-               int totalCount = await _context.Events.CountAsync();
+                int totalCount = await query.CountAsync();
 
                 return Ok(new
                 {
