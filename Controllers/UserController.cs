@@ -1,5 +1,6 @@
 ﻿using EventProjectApi.Database;
 using EventProjectApi.DTOs.UserDtos;
+using EventProjectApi.Interfaces;
 using EventProjectApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace EventProjectApi.Controllers
     public class UserController : ControllerBase
     {
         protected readonly ApplicationContext _context;
-        public UserController(ApplicationContext context) 
+        protected readonly IUserRepository _userRepository;
+        public UserController(ApplicationContext context, IUserRepository userRepository) 
         { 
             _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -22,20 +25,24 @@ namespace EventProjectApi.Controllers
         {
             try
             {
-                User newUser = new User
+                var result = await _userRepository.CreateUserAsync(createUserDto);
+
+                if ( result is not null )
                 {
-                    Name = createUserDto.Name,
-                    Email = createUserDto.Email,
-                };
-
-                await _context.Users.AddAsync(newUser);
-                await _context.SaveChangesAsync();
-
-                return Ok("User has been created with success.");
+                    return Ok(new
+                    {
+                        message = "User has been created successfully.",
+                        user = result
+                    });
+                }
+                else
+                {
+                    return BadRequest("Something went wrong while creating new user.");
+                }
             }
             catch ( Exception ex )
             {
-                return BadRequest("Something went wrong while creating new user.");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }
