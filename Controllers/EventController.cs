@@ -97,6 +97,7 @@ namespace EventProjectApi.Controllers
         /// API to get all events
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> GetAllEvents([FromQuery] AllEventQuery allEventQuery)
         {
             try
